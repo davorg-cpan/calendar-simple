@@ -6,7 +6,7 @@
 # change 'tests => 1' to 'tests => last_test_to_print';
 
 use Test;
-BEGIN { plan tests => 6 };
+BEGIN { plan tests => 15 };
 use Calendar::Simple;
 ok(1); # If we made it this far, we're ok.
 
@@ -31,3 +31,9 @@ ok(not defined $month[0][0]);
 ok($month[0][2] == 1);
 ok($month[4][4] == 31);
 ok(not defined $month[4][6]);
+
+@month = calendar(1, 2002, 1);
+ok(not defined $month[0][0]);
+ok($month[0][1] == 1);
+ok($month[4][3] == 31);
+ok(not defined $month[4][4]);
