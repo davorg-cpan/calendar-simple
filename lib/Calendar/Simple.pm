@@ -39,7 +39,7 @@ my @days = qw(31 xx 31 30 31 30 31 31 30 31 30 31);
 
 =head1 DESCRIPTION
 
-A very simple module that exports one functions called C<calendar>.
+A very simple module that exports one function called C<calendar>.
 
 =head2 calendar
 
@@ -177,6 +177,9 @@ L<perl>, L<localtime>
 
 #
 # $Log$
+# Revision 1.10  2004/10/30 19:08:54  dave
+# Moved Simple.pm
+#
 # Revision 1.9  2004/10/23 09:04:31  dave
 # Improved test coverage
 #
