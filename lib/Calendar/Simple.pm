@@ -1,3 +1,23 @@
+#
+# DESCRIPTION
+#  Calendar::Simple.pm is a Perl object that compares arrays.
+#
+# AUTHOR
+#   Dave Cross   <dave@dave@dave.org.uk>
+#
+# COPYRIGHT
+#   Copyright (C) 2002, Dave Cross.  All Rights Reserved.
+#
+#   This script is free software; you can redistribute it and/or
+#   modify it under the same terms as Perl itself.
+#
+# $Id$
+#
+# $Log$
+# Revision 1.3  2002/07/12 18:25:13  dave
+# Added CVS tags
+#
+
 
 package Calendar::Simple;
 
@@ -9,7 +29,7 @@ require Exporter;
 @ISA = qw(Exporter);
 
 @EXPORT = qw(calendar);
-$VERSION = '0.01';
+$VERSION = sprintf "%d.%02d", '$Revision$ ' =~ /(\d+)\.(\d+)/;
 
 use Time::Local;
 use Carp;
