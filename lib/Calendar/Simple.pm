@@ -14,6 +14,9 @@
 # $Id$
 #
 # $Log$
+# Revision 1.5  2002/07/30 19:40:02  dave
+# Fixed undefined value errors
+#
 # Revision 1.4  2002/07/13 14:07:55  dave
 # Doc patches
 #
@@ -46,6 +49,7 @@ sub calendar {
 
   $mon ||= ($now[0] + 1);
   $year ||= ($now[1] + 1900);
+  $start_date = 0 unless defined $start_date;
 
   croak "Year $year out of range" if $year < 1970;
   croak "Month $mon out of range" if ($mon  < 1 || $mon > 12);
@@ -55,7 +59,7 @@ sub calendar {
   my $first 
     = (localtime timelocal 0, 0, 0, 1, $mon -1, $year - 1900)[6];
   $first -= $start_day;
-  $first = 7+$first if ($first < 0);
+  $first += 7 if ($first < 0);
 
   my @mon = (1 .. days($mon, $year));
 
@@ -97,11 +101,11 @@ Calendar::Simple - Perl extension to create simple calendars
 
   use Calendar::Simple;
 
-  my @curr      = calendar;          # get current month
-  my @this_sept = calendar(9);       # get 9th month of current year
-  my @sept_2002 = calendar(9, 2002); # get 9th month of 2002
+  my @curr      = calendar;             # get current month
+  my @this_sept = calendar(9);          # get 9th month of current year
+  my @sept_2002 = calendar(9, 2002);    # get 9th month of 2002
   my @monday    = calendar(9, 2002, 1); # get 9th month of 2002,
-                                          weeks start on Monday
+                                        # weeks start on Monday
 
 =head1 DESCRIPTION
 
