@@ -5,7 +5,7 @@
 
 # change 'tests => 1' to 'tests => last_test_to_print';
 
-use Test::More tests => 24;
+use Test::More tests => 33;
 use_ok('Calendar::Simple');
 
 my @month = calendar(9, 2002);
@@ -38,6 +38,33 @@ ok($month[4][3] == 31);
 ok(not defined $month[4][4]);
 ok(not defined $month[-1][-1]);
 ok($#{$month[-1]} == 6);
+
+@month = calendar();
+ok(@month);
+
+eval { @month = calendar(-1) };
+ok($@);
+
+eval { @month = calendar(13) };
+ok($@);
+
+eval { @month = calendar(1, 2000, -1) };
+ok($@);
+
+eval { @month = calendar(1, 2000, 7) };
+ok($@);
+
+@month = calendar(2, 2000);
+ok(@month);
+
+@month = calendar(2, 2100);
+ok(@month);
+
+@month = calendar(2, 2004);
+ok(@month);
+
+my $month = calendar();
+ok(ref $month eq 'ARRAY');
 
 SKIP: {
   eval { require DateTime };
