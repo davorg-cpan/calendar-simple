@@ -5,7 +5,7 @@
 
 # change 'tests => 1' to 'tests => last_test_to_print';
 
-use Test::More tests => 23;
+use Test::More tests => 24;
 use_ok('Calendar::Simple');
 
 my @month = calendar(9, 2002);
@@ -38,3 +38,10 @@ ok($month[4][3] == 31);
 ok(not defined $month[4][4]);
 ok(not defined $month[-1][-1]);
 ok($#{$month[-1]} == 6);
+
+SKIP: {
+  eval { require DateTime };
+  skip "DateTime not installed", 1, if $@;
+  @month = calendar(1,1500);
+  ok(@month);
+}

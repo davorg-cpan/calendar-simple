@@ -6,4 +6,4 @@ BEGIN {
 
 use Test::Pod tests => scalar @pod;
 
-pod_ok($_) for @pod;
+pod_file_ok($_) for @pod;
