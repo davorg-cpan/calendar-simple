@@ -2,5 +2,6 @@ Changes
 Makefile.PL
 MANIFEST
 README
+COPYING
 Simple.pm
 test.pl
