@@ -31,7 +31,7 @@ $VERSION = sprintf "%d.%02d", '$Revision$ ' =~ /(\d+)\.(\d+)/;
 use Time::Local;
 use Carp;
 
-eval "use DateTime";
+eval 'use DateTime';
 my $dt = ! $@;
 $dt = 0 if $ENV{CAL_SIMPLE_NO_DT};
 
@@ -177,6 +177,9 @@ L<perl>, L<localtime>, L<DateTime>
 
 #
 # $Log$
+# Revision 1.12  2005/03/01 14:31:50  dave
+# Adding pod coverage tests
+#
 # Revision 1.11  2004/12/04 11:46:19  dave
 # Added 'see also' reference to DateTime
 #
