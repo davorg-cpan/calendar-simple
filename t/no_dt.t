@@ -5,7 +5,8 @@
 
 # change 'tests => 1' to 'tests => last_test_to_print';
 
-use Test::More tests => 34;
+use Test::More tests => 33;
+$ENV{CAL_SIMPLE_NO_DT} = 1;
 use_ok('Calendar::Simple');
 
 my @month = calendar(9, 2002);
@@ -39,9 +40,6 @@ ok(not defined $month[4][4]);
 ok(not defined $month[-1][-1]);
 ok($#{$month[-1]} == 6);
 
-@month = calendar(2, 2004, 3);
-ok(@month);
-
 @month = calendar();
 ok(@month);
 
@@ -60,8 +58,11 @@ ok($@);
 @month = calendar(2, 2000);
 ok(@month);
 
-@month = calendar(2, 2100);
-ok(@month);
+eval { @month = calendar(2, 2100) };
+ok($@);
+
+eval { @month = calendar(2, 1500) };
+ok($@);
 
 @month = calendar(2, 2004);
 ok(@month);
@@ -69,9 +70,3 @@ ok(@month);
 my $month = calendar();
 ok(ref $month eq 'ARRAY');
 
-SKIP: {
-  eval { require DateTime };
-  skip "DateTime not installed", 1, if $@;
-  @month = calendar(1,1500);
-  ok(@month);
-}

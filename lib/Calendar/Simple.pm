@@ -1,39 +1,20 @@
-#
-# DESCRIPTION
-#  Calendar::Simple.pm is a Perl object that compares arrays.
-#
-# AUTHOR
-#   Dave Cross   <dave@dave@dave.org.uk>
-#
-# COPYRIGHT
-#   Copyright (C) 2002, Dave Cross.  All Rights Reserved.
-#
-#   This script is free software; you can redistribute it and/or
-#   modify it under the same terms as Perl itself.
-#
 # $Id$
-#
-# $Log$
-# Revision 1.8  2003/05/14 21:16:59  dave
-# Added support for DateTime.pm (but only is it's installed).
-#
-# Revision 1.7  2003/02/19 20:17:31  dave
-# Ensure that all week arrays contain seven elements - previously the
-# last one ended on the last day of the month.
-#
-# Revision 1.6  2002/07/30 21:46:15  dave
-# Fixed the stupid error from the last fix.
-#
-# Revision 1.5  2002/07/30 19:40:02  dave
-# Fixed undefined value errors
-#
-# Revision 1.4  2002/07/13 14:07:55  dave
-# Doc patches
-#
-# Revision 1.3  2002/07/12 18:25:13  dave
-# Added CVS tags
-#
 
+=head1 NAME
+
+Calendar::Simple - Perl extension to create simple calendars
+
+=head1 SYNOPSIS
+
+  use Calendar::Simple;
+
+  my @curr      = calendar;             # get current month
+  my @this_sept = calendar(9);          # get 9th month of current year
+  my @sept_2002 = calendar(9, 2002);    # get 9th month of 2002
+  my @monday    = calendar(9, 2002, 1); # get 9th month of 2002,
+                                        # weeks start on Monday
+
+=cut
 
 package Calendar::Simple;
 
@@ -52,16 +33,40 @@ use Carp;
 
 eval "use DateTime";
 my $dt = ! $@;
+$dt = 0 if $ENV{CAL_SIMPLE_NO_DT};
 
 my @days = qw(31 xx 31 30 31 30 31 31 30 31 30 31);
+
+=head1 DESCRIPTION
+
+A very simple module that exports one functions called C<calendar>.
+
+=head2 calendar
+
+This function returns a data structure representing the dates in a month.
+The data structure returned is an array of array references. The first
+level array represents the weeks in the month. The second level array
+contains the actual days. By default, each week starts on a Sunday and
+the value in the array is the date of that day. Any days at the beginning
+of the first week or the end of the last week that are from the previous or
+next month have the value C<undef>.
+
+If the month or year parameters are omitted then the current month or
+year are assumed.
+
+A third, optional parameter, start_day, allows you to set the day each
+week starts with, with the same values as localtime sets for wday
+(namely, 0 for Sunday, 1 for Monday and so on).
+
+=cut
 
 sub calendar {
   my ($mon, $year, $start_day) = @_;
 
   my @now = (localtime)[4, 5];
 
-  $mon ||= ($now[0] + 1);
-  $year ||= ($now[1] + 1900);
+  $mon = ($now[0] + 1) unless $mon;
+  $year = ($now[1] + 1900) unless $year;
   $start_day = 0 unless defined $start_day;
 
   croak "Year $year out of range" if $year < 1970 && !$dt;
@@ -82,7 +87,7 @@ sub calendar {
   $first -= $start_day;
   $first += 7 if ($first < 0);
 
-  my @mon = (1 .. days($mon, $year));
+  my @mon = (1 .. _days($mon, $year));
 
   my @first_wk = (undef) x 7;
   @first_wk[$first .. 6] = splice @mon, 0, 6 - $first + 1;
@@ -98,14 +103,14 @@ sub calendar {
   return wantarray ? @month : \@month;
 }
 
-sub days {
+sub _days {
   my ($mon, $yr) = @_;
 
   return $days[$mon - 1] unless $mon == 2;
-  return isleap($yr) ? 29 : 28;
+  return _isleap($yr) ? 29 : 28;
 }
 
-sub isleap {
+sub _isleap {
   return 1 unless $_[0] % 400;
   return   unless $_[0] % 100;
   return 1 unless $_[0] % 4;
@@ -114,39 +119,8 @@ sub isleap {
 
 1;
 __END__
-# Below is stub documentation for your module. You better edit it!
 
-=head1 NAME
-
-Calendar::Simple - Perl extension to create simple calendars
-
-=head1 SYNOPSIS
-
-  use Calendar::Simple;
-
-  my @curr      = calendar;             # get current month
-  my @this_sept = calendar(9);          # get 9th month of current year
-  my @sept_2002 = calendar(9, 2002);    # get 9th month of 2002
-  my @monday    = calendar(9, 2002, 1); # get 9th month of 2002,
-                                        # weeks start on Monday
-
-=head1 DESCRIPTION
-
-A very simple module that exports one functions called C<calendar>. This
-function returns a data structure representing the dates in a month. The
-data structure returned is an array of array references. The first level
-array represents the weeks in the month. The second level array contains
-the actual days. By default, each week starts on a Sunday and the value
-in the array is the date of that day. Any days at the beginning of the
-first week or the end of the last week that are from the previous or
-next month have the value C<undef>.
-
-If the month or year parameters are omitted then the current month or
-year are assumed.
-
-A third, optional parameter, start_day, allows you to set the day each
-week starts with, with the same values as localtime sets for wday
-(namely, 0 for Sunday, 1 for Monday and so on).
+=head2 EXAMPLE
 
 A simple C<cal> replacement would therefore look like this:
 
@@ -188,8 +162,41 @@ Dave Cross <dave@dave.org.uk>
 
 With thanks to Paul Mison <cpan@husk.org> for the start day patch.
 
+=head1 COPYRIGHT
+
+Copyright (C) 2002, Dave Cross.  All Rights Reserved.
+
+This script is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.
+
 =head1 SEE ALSO
 
 L<perl>, L<localtime>
 
 =cut
+
+#
+# $Log$
+# Revision 1.9  2004/10/23 09:04:31  dave
+# Improved test coverage
+#
+# Revision 1.8  2003/05/14 21:16:59  dave
+# Added support for DateTime.pm (but only is it's installed).
+#
+# Revision 1.7  2003/02/19 20:17:31  dave
+# Ensure that all week arrays contain seven elements - previously the
+# last one ended on the last day of the month.
+#
+# Revision 1.6  2002/07/30 21:46:15  dave
+# Fixed the stupid error from the last fix.
+#
+# Revision 1.5  2002/07/30 19:40:02  dave
+# Fixed undefined value errors
+#
+# Revision 1.4  2002/07/13 14:07:55  dave
+# Doc patches
+#
+# Revision 1.3  2002/07/12 18:25:13  dave
+# Added CVS tags
+#
+
