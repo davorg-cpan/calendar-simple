@@ -14,6 +14,9 @@
 # $Id$
 #
 # $Log$
+# Revision 1.6  2002/07/30 21:46:15  dave
+# Fixed the stupid error from the last fix.
+#
 # Revision 1.5  2002/07/30 19:40:02  dave
 # Fixed undefined value errors
 #
@@ -49,7 +52,7 @@ sub calendar {
 
   $mon ||= ($now[0] + 1);
   $year ||= ($now[1] + 1900);
-  $start_date = 0 unless defined $start_date;
+  $start_day = 0 unless defined $start_day;
 
   croak "Year $year out of range" if $year < 1970;
   croak "Month $mon out of range" if ($mon  < 1 || $mon > 12);
