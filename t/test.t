@@ -60,9 +60,6 @@ ok($@);
 @month = calendar(2, 2000);
 ok(@month);
 
-@month = calendar(2, 2100);
-ok(@month);
-
 @month = calendar(2, 2004);
 ok(@month);
 
@@ -71,7 +68,10 @@ ok(ref $month eq 'ARRAY');
 
 SKIP: {
   eval { require DateTime };
-  skip "DateTime not installed", 1, if $@;
+  skip "DateTime not installed", 2, if $@ || $ENV{CAL_SIMPLE_NO_DT};
   @month = calendar(1,1500);
+  ok(@month);
+
+  @month = calendar(2, 2100);
   ok(@month);
 }
