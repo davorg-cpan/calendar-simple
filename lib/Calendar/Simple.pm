@@ -14,6 +14,9 @@
 # $Id$
 #
 # $Log$
+# Revision 1.8  2003/05/14 21:16:59  dave
+# Added support for DateTime.pm (but only is it's installed).
+#
 # Revision 1.7  2003/02/19 20:17:31  dave
 # Ensure that all week arrays contain seven elements - previously the
 # last one ended on the last day of the month.
@@ -47,6 +50,9 @@ $VERSION = sprintf "%d.%02d", '$Revision$ ' =~ /(\d+)\.(\d+)/;
 use Time::Local;
 use Carp;
 
+eval "use DateTime";
+my $dt = ! $@;
+
 my @days = qw(31 xx 31 30 31 30 31 31 30 31 30 31);
 
 sub calendar {
@@ -58,13 +64,21 @@ sub calendar {
   $year ||= ($now[1] + 1900);
   $start_day = 0 unless defined $start_day;
 
-  croak "Year $year out of range" if $year < 1970;
+  croak "Year $year out of range" if $year < 1970 && !$dt;
   croak "Month $mon out of range" if ($mon  < 1 || $mon > 12);
-  croak "Start day $start_day out of range" 
+  croak "Start day $start_day out of range"
     if ($start_day < 0 || $start_day > 6);
 
-  my $first 
-    = (localtime timelocal 0, 0, 0, 1, $mon -1, $year - 1900)[6];
+  my $first;
+
+  if ($dt) {
+    $first = DateTime->new(year => $year,
+			   month => $mon,
+			   day => 1)->day_of_week % 7;
+  } else {
+    $first = (localtime timelocal 0, 0, 0, 1, $mon -1, $year - 1900)[6];
+  }
+
   $first -= $start_day;
   $first += 7 if ($first < 0);
 
@@ -155,6 +169,14 @@ A simple C<cal> replacement would therefore look like this:
     print map { $_ ? sprintf "%2d ", $_ : '   ' } @$_;
     print "\n";
   }
+
+=head2 Date Range
+
+This module will make use of DateTime.pm if it is installed. By using
+DateTime.pm it can use any date that DateTime can represent. If DateTime
+is not installed it uses Perl's built-in date handling and therefore
+can't deal with dates before 1970 and it will also have problems with dates
+after 2038 on a 32-bit machine.
 
 =head2 EXPORT
 
