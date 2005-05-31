@@ -160,6 +160,8 @@ C<calendar>
 
 Dave Cross <dave@dave.org.uk>
 
+=head1 ACKNOWLEDGEMENTS
+
 With thanks to Paul Mison <cpan@husk.org> for the start day patch.
 
 =head1 COPYRIGHT
@@ -177,6 +179,10 @@ L<perl>, L<localtime>, L<DateTime>
 
 #
 # $Log$
+# Revision 1.13  2005/05/31 18:52:01  dave
+# Fixes to Build.PL.
+# Small changes to Pod.
+#
 # Revision 1.12  2005/03/01 14:31:50  dave
 # Adding pod coverage tests
 #
