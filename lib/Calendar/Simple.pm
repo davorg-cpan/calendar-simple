@@ -26,7 +26,7 @@ require Exporter;
 @ISA = qw(Exporter);
 
 @EXPORT = qw(calendar);
-$VERSION = sprintf "%d.%02d", '$Revision$ ' =~ /(\d+)\.(\d+)/;
+$VERSION = '1.14';
 
 use Time::Local;
 use Carp;
