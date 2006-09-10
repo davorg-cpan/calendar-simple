@@ -158,7 +158,7 @@ C<calendar>
 
 =head1 AUTHOR
 
-Dave Cross <dave@dave.org.uk>
+Dave Cross <dave@mag-sol.com>
 
 =head1 ACKNOWLEDGEMENTS
 
@@ -166,7 +166,7 @@ With thanks to Paul Mison <cpan@husk.org> for the start day patch.
 
 =head1 COPYRIGHT
 
-Copyright (C) 2002, Dave Cross.  All Rights Reserved.
+Copyright (C) 2002-2006, Magnum Solutions Ltd..  All Rights Reserved.
 
 This script is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself.
@@ -176,42 +176,3 @@ modify it under the same terms as Perl itself.
 L<perl>, L<localtime>, L<DateTime>
 
 =cut
-
-#
-# $Log$
-# Revision 1.13  2005/05/31 18:52:01  dave
-# Fixes to Build.PL.
-# Small changes to Pod.
-#
-# Revision 1.12  2005/03/01 14:31:50  dave
-# Adding pod coverage tests
-#
-# Revision 1.11  2004/12/04 11:46:19  dave
-# Added 'see also' reference to DateTime
-#
-# Revision 1.10  2004/10/30 19:08:54  dave
-# Moved Simple.pm
-#
-# Revision 1.9  2004/10/23 09:04:31  dave
-# Improved test coverage
-#
-# Revision 1.8  2003/05/14 21:16:59  dave
-# Added support for DateTime.pm (but only is it's installed).
-#
-# Revision 1.7  2003/02/19 20:17:31  dave
-# Ensure that all week arrays contain seven elements - previously the
-# last one ended on the last day of the month.
-#
-# Revision 1.6  2002/07/30 21:46:15  dave
-# Fixed the stupid error from the last fix.
-#
-# Revision 1.5  2002/07/30 19:40:02  dave
-# Fixed undefined value errors
-#
-# Revision 1.4  2002/07/13 14:07:55  dave
-# Doc patches
-#
-# Revision 1.3  2002/07/12 18:25:13  dave
-# Added CVS tags
-#
-

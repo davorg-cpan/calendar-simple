@@ -11,11 +11,14 @@
 
 <TEXT>To install this module type the following:</TEXT>
 
-<CODE>   perl Makefile.PL
-   make
-   make test
-   make install
+<CODE>   perl Build.PL
+   ./Build
+   ./Build test
+   ./Build install
 </CODE>
+
+<TEXT>Note: The older "perl Makefile.PL; make; make test; make install" sequence will also work.</TEXT>
+
 </SUBSECTION>
 
 <SUBSECTION>
@@ -30,7 +33,7 @@
 <TEXT>This script is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself.</TEXT>
 
-<TEXT>Copyright (C) 2002 Dave Cross, All rights reserved.</TEXT>
+<TEXT>Copyright (C) 2002-2006 Magnum Solutions Ltd., All rights reserved.</TEXT>
 </SUBSECTION>
 </DESCRIPTION>
 </README>
