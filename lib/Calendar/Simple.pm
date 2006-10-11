@@ -133,7 +133,7 @@ A simple C<cal> replacement would therefore look like this:
                   September October November December);
 
   my $mon = shift || (localtime)[4] + 1;
-  my $yr = shift || ((localtime)[5] + 1900);
+  my $yr  = shift || (localtime)[5] + 1900;
 
   my @month = calendar($mon, $yr);
 
