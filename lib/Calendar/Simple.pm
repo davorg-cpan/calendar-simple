@@ -229,6 +229,9 @@ A simple C<cal> replacement would therefore look like this:
     print "\n";
   }
 
+A version of this example, called C<pcal>, is installed when you install this
+module.
+
 =head2 Date Range
 
 This module will make use of DateTime.pm if it is installed. By using
