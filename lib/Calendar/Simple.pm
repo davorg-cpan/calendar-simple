@@ -14,19 +14,25 @@ Calendar::Simple - Perl extension to create simple calendars
   my @monday    = calendar(9, 2002, 1); # get 9th month of 2002,
                                         # weeks start on Monday
 
+  my @span      = date_span(mon   => 10,  # returns span of dates
+                            year  => 2006,
+                            begin => 15,
+                            end   => 28);
+
 =cut
 
 package Calendar::Simple;
 
 use strict;
-use vars qw(@ISA @EXPORT $VERSION);
+use vars qw(@ISA @EXPORT @EXPORT_OK $VERSION);
 
 require Exporter;
 
 @ISA = qw(Exporter);
 
 @EXPORT = qw(calendar);
-$VERSION = '1.14';
+@EXPORT_OK = qw(date_span);
+$VERSION = '1.15';
 
 use Time::Local;
 use Carp;
@@ -101,6 +107,85 @@ sub calendar {
   $#{$month[-1]} = 6;
 
   return wantarray ? @month : \@month;
+}
+
+=head2 date_span
+
+This function returns a cur-down version of a month data structure which
+begins and ends on dates other than the first and last dates of the month.
+Any weeks that fall completely outside of the date range are removed from
+the structure and any days within the remaining weeks that fall outside
+of the date range are set to C<undef>.
+
+As there are a number of parameters to this function, they are passed
+using a named parameter interface. The parameters are as follows:
+
+=over 4
+
+=item year
+
+The required year. Defaults to the current year if omitted.
+
+=item mon
+
+The required month. Defaults to the current month if omitted.
+
+=item begin
+
+The first day of the required span. Defaults to the first if omitted.
+
+=item end
+
+The last day of the required span. Defaults to the last day of the month
+if omitted.
+
+=item start_day
+
+Indicates the day of the week that each week starts with. This takes the same
+values as the optional third parameter to C<calendar>. The default is 0
+(for Sunday).
+
+=back
+
+This function isn't exported by default, so in order to use it in your
+program you need to use the module like this:
+
+  use Calendar::Simple 'date_span';
+
+=cut
+
+sub date_span {
+  my %params = @_;
+
+  my @now = (localtime)[4, 5];
+
+  my $mon   = $params{mon}   || ($now[0] + 1);
+  my $year  = $params{year}  || ($now[1] + 1900);
+  my $begin = $params{begin} || 1;
+  my $end    = $params{end}   || _days($mon, $year);
+  my $start_day = defined $params{start_day} ? $params{start_day} : 0;
+
+  my @cal = calendar($mon, $year, $start_day);
+
+  while ($cal[0][6] < $begin) {
+    shift @cal;
+  }
+
+  my $i = 0;
+  while ($cal[0][$i] < $begin) {
+    $cal[0][$i++] = undef;
+  }
+
+  while ($cal[-1][0] > $end) {
+    pop @cal;
+  }
+
+  $i = -1;
+  while ($cal[-1][$i] > $end) {
+    $cal[-1][$i--] = undef;
+  }
+
+  return @cal;
 }
 
 sub _days {
