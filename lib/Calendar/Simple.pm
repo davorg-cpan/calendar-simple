@@ -32,7 +32,7 @@ require Exporter;
 
 @EXPORT = qw(calendar);
 @EXPORT_OK = qw(date_span);
-$VERSION = '1.15';
+$VERSION = '1.16';
 
 use Time::Local;
 use Carp;
