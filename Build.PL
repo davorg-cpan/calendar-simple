@@ -8,6 +8,7 @@ my $build = Module::Build->new(
                                                Test::More => 0,
                                               },
                                create_makefile_pl => 'traditional',
+                               script_files => [ 'bin/pcal' ],
                                sign        => 1,
                               );
 
