@@ -172,7 +172,7 @@ sub date_span {
   }
 
   my $i = 0;
-  while ($cal[0][$i] < $begin) {
+  while (defined $cal[0][$i] and $cal[0][$i] < $begin) {
     $cal[0][$i++] = undef;
   }
 
@@ -181,7 +181,7 @@ sub date_span {
   }
 
   $i = -1;
-  while ($cal[-1][$i] > $end) {
+  while (defined $cal[-1][$i] and $cal[-1][$i] > $end) {
     $cal[-1][$i--] = undef;
   }
 
