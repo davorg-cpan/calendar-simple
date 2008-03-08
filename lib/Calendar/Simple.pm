@@ -23,16 +23,17 @@ Calendar::Simple - Perl extension to create simple calendars
 
 package Calendar::Simple;
 
+use 5.006;
 use strict;
-use vars qw(@ISA @EXPORT @EXPORT_OK $VERSION);
+use warnings;
 
 require Exporter;
 
-@ISA = qw(Exporter);
+our @ISA = qw(Exporter);
 
-@EXPORT = qw(calendar);
-@EXPORT_OK = qw(date_span);
-$VERSION = '1.17';
+our @EXPORT = qw(calendar);
+our @EXPORT_OK = qw(date_span);
+our $VERSION = sprintf "%d", '$Revision$ ' =~ /(\d+)/;
 
 use Time::Local;
 use Carp;
@@ -254,7 +255,9 @@ With thanks to Paul Mison <cpan@husk.org> for the start day patch.
 
 =head1 COPYRIGHT
 
-Copyright (C) 2002-2006, Magnum Solutions Ltd..  All Rights Reserved.
+Copyright (C) 2002-2008, Magnum Solutions Ltd.  All Rights Reserved.
+
+=head1 LICENCE
 
 This script is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself.
