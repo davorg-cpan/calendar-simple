@@ -257,7 +257,7 @@ With thanks to Paul Mison <cpan@husk.org> for the start day patch.
 
 Copyright (C) 2002-2008, Magnum Solutions Ltd.  All Rights Reserved.
 
-=head1 LICENCE
+=head1 LICENSE
 
 This script is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself.
