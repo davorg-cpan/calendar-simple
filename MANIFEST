@@ -3,7 +3,6 @@ Makefile.PL
 Build.PL
 MANIFEST
 README
-COPYING
 lib/Calendar/Simple.pm
 t/test.t
 t/pod.t
