@@ -1,6 +1,7 @@
 use Test::More tests => 33;
 $ENV{CAL_SIMPLE_NO_DT} = 1;
 use_ok('Calendar::Simple');
+use Config;
 
 my @month = calendar(9, 2002);
 
@@ -51,8 +52,13 @@ ok($@);
 @month = calendar(2, 2000);
 ok(@month);
 
-eval { @month = calendar(2, 2100) };
-ok($@);
+SKIP: {
+  skip 'Not a problem on 64-bit systems', 1
+    if defined $Config{use64bitint};
+
+  eval { @month = calendar(2, 2100) };
+  ok($@);
+}
 
 eval { @month = calendar(2, 1500) };
 ok($@);
