@@ -33,7 +33,7 @@ our @ISA = qw(Exporter);
 
 our @EXPORT = qw(calendar);
 our @EXPORT_OK = qw(date_span);
-our $VERSION = sprintf "%d", '$Revision$ ' =~ /(\d+)/;
+our $VERSION = '1.20';
 
 use Time::Local;
 use Carp;
