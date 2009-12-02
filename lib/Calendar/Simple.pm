@@ -27,13 +27,11 @@ use 5.006;
 use strict;
 use warnings;
 
-require Exporter;
-
-our @ISA = qw(Exporter);
+use base 'Exporter';
 
 our @EXPORT = qw(calendar);
 our @EXPORT_OK = qw(date_span);
-our $VERSION = sprintf "%d", '$Revision$ ' =~ /(\d+)/;
+our $VERSION = '1.20';
 
 use Time::Local;
 use Carp;
