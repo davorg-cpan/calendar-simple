@@ -53,6 +53,8 @@ ok($@);
 ok(@month);
 
 SKIP: {
+  skip 'Not a problem since perl 5.11.0', 1
+    if $] >= 5.011;
   skip 'Not a problem on 64-bit systems', 1
     if defined $Config{use64bitint};
 
