@@ -31,7 +31,7 @@ use base 'Exporter';
 
 our @EXPORT = qw(calendar);
 our @EXPORT_OK = qw(date_span);
-our $VERSION = '1.22';
+our $VERSION = '1.23';
 
 use Time::Local;
 use Carp;
