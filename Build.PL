@@ -22,7 +22,6 @@ my $build = Module::Build->new(
 	},
         create_makefile_pl => 'traditional',
         script_files       => [ 'bin/pcal' ],
-        sign               => 1,
         meta_merge => {
             resources => {
                 repository => 'https://github.com/davorg/calendar-simple',
