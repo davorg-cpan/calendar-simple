@@ -7,7 +7,6 @@ META.yml
 MYMETA.json
 MYMETA.yml
 Makefile.PL
-README
 _build/
 blib/
 cover_db/
