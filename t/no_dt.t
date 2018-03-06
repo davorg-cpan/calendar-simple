@@ -1,4 +1,7 @@
+use strict;
+use warnings;
 use Test::More tests => 33;
+
 $ENV{CAL_SIMPLE_NO_DT} = 1;
 use_ok('Calendar::Simple');
 use Config;

@@ -83,8 +83,8 @@ sub calendar {
 
   if ($dt) {
     $first = DateTime->new(year => $year,
-			   month => $mon,
-			   day => 1)->day_of_week % 7;
+      month => $mon,
+      day => 1)->day_of_week % 7;
   } else {
     $first = (localtime timelocal 0, 0, 0, 1, $mon -1, $year)[6];
   }
