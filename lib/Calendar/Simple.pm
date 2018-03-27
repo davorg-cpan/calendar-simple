@@ -135,7 +135,7 @@ sub date_span {
   my %params = @_;
 
   my ($mon, $year, $start_day) = _validate_params(
-    @_[ qw[mon year start_day] ],
+    @params{ qw[mon year start_day] },
   );
 
   my $begin = $params{begin} || 1;
@@ -143,18 +143,14 @@ sub date_span {
 
   my @cal = calendar($mon, $year, $start_day);
 
-  while ($cal[0][6] < $begin) {
-    shift @cal;
-  }
+  shift @cal while $cal[0][6] < $begin;
 
   my $i = 0;
   while (defined $cal[0][$i] and $cal[0][$i] < $begin) {
     $cal[0][$i++] = undef;
   }
 
-  while ($cal[-1][0] > $end) {
-    pop @cal;
-  }
+  pop @cal while $cal[-1][0] > $end;
 
   $i = -1;
   while (defined $cal[-1][$i] and $cal[-1][$i] > $end) {
