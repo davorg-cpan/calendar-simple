@@ -64,7 +64,7 @@ week starts with, with the same values as localtime sets for wday
 sub calendar {
   my ($mon, $year, $start_day) = _validate_params(@_);
 
-  my $first = _get_first($start_date);
+  my $first = _get_first($start_day);
 
   my @mon = (1 .. _days($mon, $year));
 
@@ -157,7 +157,7 @@ sub date_span {
 }
 
 sub _get_first {
-  my ($start_date) = @_;
+  my ($start_day) = @_;
 
   eval 'use DateTime';
   my $dt = ! $@;
