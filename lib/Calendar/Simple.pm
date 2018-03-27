@@ -68,18 +68,7 @@ week starts with, with the same values as localtime sets for wday
 sub calendar {
   my ($mon, $year, $start_day) = _validate_params(@_);
 
-  my $first;
-
-  if ($dt) {
-    $first = DateTime->new(year => $year,
-      month => $mon,
-      day => 1)->day_of_week % 7;
-  } else {
-    $first = (localtime timelocal 0, 0, 0, 1, $mon -1, $year)[6];
-  }
-
-  $first -= $start_day;
-  $first += 7 if ($first < 0);
+  my $first = _get_first($start_date);
 
   my @mon = (1 .. _days($mon, $year));
 
@@ -173,6 +162,25 @@ sub date_span {
   }
 
   return @cal;
+}
+
+sub _get_first {
+  my ($start_date) = @_;
+
+  my $first;
+
+  if ($dt) {
+    $first = DateTime->new(year => $year,
+      month => $mon,
+      day => 1)->day_of_week % 7;
+  } else {
+    $first = (localtime timelocal 0, 0, 0, 1, $mon -1, $year)[6];
+  }
+
+  $first -= $start_day;
+  $first += 7 if ($first < 0);
+
+  return $first;
 }
 
 sub _days {
