@@ -36,10 +36,6 @@ our $VERSION = '1.23';
 use Time::Local;
 use Carp;
 
-eval 'use DateTime';
-my $dt = ! $@;
-$dt = 0 if $ENV{CAL_SIMPLE_NO_DT};
-
 my @days = qw(31 xx 31 30 31 30 31 31 30 31 30 31);
 
 =head1 DESCRIPTION
@@ -162,6 +158,10 @@ sub date_span {
 
 sub _get_first {
   my ($start_date) = @_;
+
+  eval 'use DateTime';
+  my $dt = ! $@;
+  $dt = 0 if $ENV{CAL_SIMPLE_NO_DT};
 
   my $first;
 
