@@ -66,18 +66,7 @@ week starts with, with the same values as localtime sets for wday
 =cut
 
 sub calendar {
-  my ($mon, $year, $start_day) = @_;
-
-  my @now = (localtime)[4, 5];
-
-  $mon = ($now[0] + 1) unless $mon;
-  $year = ($now[1] + 1900) unless $year;
-  $start_day = 0 unless defined $start_day;
-
-  croak "Year $year out of range" if $year < 1970 && !$dt;
-  croak "Month $mon out of range" if ($mon  < 1 || $mon > 12);
-  croak "Start day $start_day out of range"
-    if ($start_day < 0 || $start_day > 6);
+  my ($mon, $year, $start_day) = _validate_params(@_);
 
   my $first;
 
@@ -156,13 +145,12 @@ program you need to use the module like this:
 sub date_span {
   my %params = @_;
 
-  my @now = (localtime)[4, 5];
+  my ($mon, $year, $start_day) = _validate_params(
+    @_[ qw[mon year start_day] ],
+  );
 
-  my $mon   = $params{mon}   || ($now[0] + 1);
-  my $year  = $params{year}  || ($now[1] + 1900);
   my $begin = $params{begin} || 1;
-  my $end    = $params{end}   || _days($mon, $year);
-  my $start_day = defined $params{start_day} ? $params{start_day} : 0;
+  my $end   = $params{end}   || _days($mon, $year);
 
   my @cal = calendar($mon, $year, $start_day);
 
@@ -199,6 +187,24 @@ sub _isleap {
   return   unless $_[0] % 100;
   return 1 unless $_[0] % 4;
   return;
+}
+
+sub _validate_params {
+  my ($mon, $year, $start_day) = @_;
+
+  my @now = (localtime)[4, 5];
+
+  $mon = ($now[0] + 1) unless $mon;
+  $year = ($now[1] + 1900) unless $year;
+  $start_day = 0 unless defined $start_day;
+
+  croak "Year $year out of range" if $year < 1970 && !$dt;
+  croak "Month $mon out of range" if ($mon  < 1 || $mon > 12);
+  croak "Start day $start_day out of range"
+    if ($start_day < 0 || $start_day > 6);
+
+
+  return ($mon, $year, $start_day);
 }
 
 1;
