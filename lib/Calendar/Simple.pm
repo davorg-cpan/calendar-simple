@@ -36,6 +36,10 @@ our $VERSION = '1.23';
 use Time::Local;
 use Carp;
 
+eval 'use DateTime';
+my $dt = ! $@;
+$dt = 0 if $ENV{CAL_SIMPLE_NO_DT};
+
 my @days = qw(31 xx 31 30 31 30 31 31 30 31 30 31);
 
 =head1 DESCRIPTION
@@ -64,7 +68,7 @@ week starts with, with the same values as localtime sets for wday
 sub calendar {
   my ($mon, $year, $start_day) = _validate_params(@_);
 
-  my $first = _get_first($start_day);
+  my $first = _get_first($mon, $year, $start_day);
 
   my @mon = (1 .. _days($mon, $year));
 
@@ -157,11 +161,7 @@ sub date_span {
 }
 
 sub _get_first {
-  my ($start_day) = @_;
-
-  eval 'use DateTime';
-  my $dt = ! $@;
-  $dt = 0 if $ENV{CAL_SIMPLE_NO_DT};
+  my ($mon, $year, $start_day) = @_;
 
   my $first;
 
