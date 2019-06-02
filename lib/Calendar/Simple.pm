@@ -88,7 +88,7 @@ sub calendar {
 
 =head2 date_span
 
-This function returns a cur-down version of a month data structure which
+This function returns a cut-down version of a month data structure which
 begins and ends on dates other than the first and last dates of the month.
 Any weeks that fall completely outside of the date range are removed from
 the structure and any days within the remaining weeks that fall outside
@@ -243,8 +243,8 @@ module.
 
 =head2 Date Range
 
-This module will make use of DateTime.pm if it is installed. By using
-DateTime.pm it can use any date that DateTime can represent. If DateTime
+This module will make use of L<DateTime> if it is installed. By using
+L<DateTime> it can use any date that C<DateTime> can represent. If L<DateTime>
 is not installed it uses Perl's built-in date handling and therefore
 can't deal with dates before 1970 and it will also have problems with dates
 after 2038 on a 32-bit machine.
