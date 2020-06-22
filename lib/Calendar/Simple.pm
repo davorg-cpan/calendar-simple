@@ -31,7 +31,7 @@ use base 'Exporter';
 
 our @EXPORT = qw(calendar);
 our @EXPORT_OK = qw(date_span);
-our $VERSION = '1.23';
+our $VERSION = '2.00';
 
 use Time::Local;
 use Carp;
@@ -119,8 +119,12 @@ if omitted.
 =item start_day
 
 Indicates the day of the week that each week starts with. This takes the same
-values as the optional third parameter to C<calendar>. The default is 0
-(for Sunday).
+values as the optional third parameter to C<calendar>. The default is 1
+(for Monday).
+
+B<NOTE:> As of version 2.0.0, the default C<start_day> has changed. Previously,
+it was Sunday; now, it is Monday. This is so the default behaviour matches
+that of the standard Unix C<cal> command.
 
 =back
 
@@ -200,13 +204,12 @@ sub _validate_params {
 
   $mon = ($now[0] + 1) unless $mon;
   $year = ($now[1] + 1900) unless $year;
-  $start_day = 0 unless defined $start_day;
+  $start_day = 1 unless defined $start_day;
 
   croak "Year $year out of range" if $year < 1970 && !$dt;
   croak "Month $mon out of range" if ($mon  < 1 || $mon > 12);
   croak "Start day $start_day out of range"
     if ($start_day < 0 || $start_day > 6);
-
 
   return ($mon, $year, $start_day);
 }
@@ -218,9 +221,10 @@ __END__
 
 A simple C<cal> replacement would therefore look like this:
 
-  #!/usr/bin/perl -w
+  #!/usr/bin/perl
 
   use strict;
+  use warnings;
   use Calendar::Simple;
 
   my @months = qw(January February March April May June July August
