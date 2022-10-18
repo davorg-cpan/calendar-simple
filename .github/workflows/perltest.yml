@@ -34,12 +34,14 @@ jobs:
     runs-on: ubuntu-latest
     name: Test coverage
     steps:
-      - env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/checkout@v3
       - name: Set up Perl
         uses: shogo82148/actions-setup-perl@v1
-      - run: perl -V
-      - run: cpan Devel::Cover::Report::Coveralls
-      - run: cpanm -n --installdeps .
-      - run: cover -test -report Coveralls
+      - name: Install Coveralls
+        run: cpan Devel::Cover::Report::Coveralls
+      - name: Install modules
+        run: cpanm -n --installdeps .
+      - name: Coverage
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: cover -test -report Coveralls
