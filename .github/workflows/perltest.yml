@@ -36,8 +36,6 @@ jobs:
     name: Test coverage
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Perl
-        uses: shogo82148/actions-setup-perl@v1
       - name: Install modules
         run: cpanm -n --installdeps .
       - name: Coverage
