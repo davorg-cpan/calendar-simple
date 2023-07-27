@@ -32,7 +32,7 @@ my $build = Module::Build->new(
       },
       bugtracker => {
         web => 'https://github.com/davorg/calendar-simple/issues',
-      }
+      },
     },
   },
 );
