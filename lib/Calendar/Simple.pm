@@ -36,7 +36,7 @@ our $VERSION = '2.0.3';
 use Time::Local;
 use Carp;
 
-eval 'use DateTime';
+eval { use DateTime };
 my $dt = ! $@;
 $dt = 0 if $ENV{CAL_SIMPLE_NO_DT};
 
