@@ -27,11 +27,11 @@ my $build = Module::Build->new(
     resources => {
       repository => {
         type => 'git',
-        url => 'https://github.com/davorg/calendar-simple.git',
-        web => 'https://github.com/davorg/calendar-simple',
+        url => 'https://github.com/davorg-cpan/calendar-simple.git',
+        web => 'https://github.com/davorg-cpan/calendar-simple',
       },
       bugtracker => {
-        web => 'https://github.com/davorg/calendar-simple/issues',
+        web => 'https://github.com/davorg-cpan/calendar-simple/issues',
       },
     },
   },
