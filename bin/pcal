@@ -1,16 +1,20 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 
 use strict;
 use warnings;
+
+use v5.10.0;
+
 use Calendar::Simple;
 
 my @months = qw(January February March April May June July August
                 September October November December);
 
-my $month      = shift || (localtime)[4] + 1;
-my $year       = shift || (localtime)[5] + 1900;
-my $start_date = shift;
-$start_date    = 1 unless defined $start_date;
+my $month      = shift // (localtime)[4] + 1;
+my $year       = shift // (localtime)[5] + 1900;
+my $start_date = shift // 1;
+
+$start_date %= 7;
 
 my @month = calendar($month, $year, $start_date);
 my $month_name = $months[$month - 1];
