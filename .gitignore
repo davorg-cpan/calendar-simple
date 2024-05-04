@@ -1,6 +1,7 @@
 Build
 Calendar-Simple-*.tar.gz
-Calendar-Simple/
+Calendar-Simple-*.tar
+Calendar-Simple-*/
 META.json
 META.yml
 MYMETA.json
