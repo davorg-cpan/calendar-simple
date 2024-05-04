@@ -230,10 +230,9 @@ A simple C<cal> replacement would therefore look like this:
   my @months = qw(January February March April May June July August
                   September October November December);
 
-  my $mon = shift || (localtime)[4] + 1;
-  my $yr  = shift || (localtime)[5] + 1900;
-  my $sd  = shift;
-  $ds = 1 unless defined $sd;
+  my $mon = shift // (localtime)[4] + 1;
+  my $yr  = shift // (localtime)[5] + 1900;
+  my $sd  = shift // 1;
 
   my @month = calendar($mon, $yr, $sd);
   print "\n$months[$mon -1] $yr\n\n";
